@@ -1,11 +1,37 @@
-$('#cardFamilyImgId')[0].src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/DC_Comics_logo.png/280px-DC_Comics_logo.png";
-$('#cardFamilyNameId')[0].innerText="DC comics";
-$('#cardImgId')[0].src="http://www.guinnessworldrecords.com/images/superlative/superheroes/GWR-Superheroes-SUPERMAN.svg";
-$('#cardNameId')[0].innerText="SUPERMAN";
-$('#cardDescriptionId')[0].innerText="The origin story of Superman relates that he was born Kal-El on the planet Krypton, before being rocketed to Earth as an infant by his scientist father Jor-El, moments before Krypton's destruction. Discovered and adopted by a farm couple from Kansas, the child is raised as Clark Kent and imbued with a strong moral compass. Early in his childhood, he displays various superhuman abilities, which, upon reaching maturity, he resolves to use for the benefit of humanity through a 'Superman' identity.";
-$('#cardHPId')[0].innerText="50 HP";
-$('#cardEnergyId')[0].innerText="100 Energy";
-$('#cardAttackId')[0].innerText="17 Attack";
-$('#cardDefenceId')[0].innerText="80 Defence";
+
+function reqListener () {
+  console.log(this.responseText);
+  var data = JSON.parse(this.responseText);
+  if(data){
+	  $('#cardFamilyImgId')[0].src=data.imgUrl
+	  $('#cardFamilyNameId')[0].innerText=data.family;
+	  $('#cardImgId')[0].src=data.imgUrl
+	  $('#cardNameId')[0].innerText=data.name
+	  $('#cardDescriptionId')[0].innerText=data.description
+	  $('#cardHPId')[0].innerText=`${data.hp} HP`;
+	  $('#cardEnergyId')[0].innerText=`${data.energy} Energy`;
+	  $('#cardAttackId')[0].innerText=`${data.attack} Attack`;
+	  $('#cardDefenceId')[0].innerText=`${data.defence} Defence`;
+	  
+  }else{
+	  $('#notif')[0].innerText = "Hero inconnu"
+  }
+ 
+}
+
+
+var querySearch =  window.location.search.replace("?","").split(",").map(query=>{return query.split("=")}).find(n=>n[0]=="search")
+console.log(querySearch)
+if(querySearch){
+	var oReq = new XMLHttpRequest();
+	oReq.addEventListener("load", reqListener);
+	oReq.open("GET", "rest/servicescard/find?name="+querySearch[1]);
+	oReq.send();
+}else{
+	$('#notif')[0].innerText = "Choissisez un hero"
+}
+
+
+
 
 
