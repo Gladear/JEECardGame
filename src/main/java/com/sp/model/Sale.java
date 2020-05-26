@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Sale {
@@ -13,7 +13,7 @@ public class Sale {
 	@Id
 	private Integer id;
 
-	@ManyToOne
+	@OneToOne()
 	@JoinColumn(name = "card_id", unique = true)
 	private Card card;
 

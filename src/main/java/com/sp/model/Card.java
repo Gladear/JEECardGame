@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -17,21 +18,24 @@ public class Card {
 	@ManyToOne
 	@JoinColumn(name = "card_template_id")
 	private CardTemplate template;
-	
+
 	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private User owner;
 
-	public Card(Integer id, CardTemplate template, User owner) {
+	@OneToOne(mappedBy = "card")
+	private Sale sale;
+
+	public Card() {
+	}
+
+	public Card(Integer id, CardTemplate template, User owner, Sale sale) {
 		super();
 		this.id = id;
 		this.template = template;
 		this.owner = owner;
-	}
-
-	public Card() {
-
+		this.sale = sale;
 	}
 
 	public Integer getId() {
@@ -56,6 +60,10 @@ public class Card {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+
+	public boolean isOnSale() {
+		return this.sale != null;
 	}
 
 }
