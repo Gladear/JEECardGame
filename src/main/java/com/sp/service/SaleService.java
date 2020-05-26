@@ -23,8 +23,11 @@ public class SaleService {
 	@Autowired
 	UserRepository uRepository;
 
-	public void create(Integer cardId, Double price) {
+	public void create(Integer userId, Integer cardId, Double price) {
 		Card card = cRepository.findById(cardId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		if (!card.getOwner().getId().equals(userId)) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
 		Sale sale = new Sale(0, card, price);
 		sRepository.save(sale);
 	}
@@ -40,11 +43,14 @@ public class SaleService {
 	public void buy(Integer userId, Integer saleId) {
 		User buyer = uRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		Sale sale = sRepository.findById(saleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		Card card = sale.getCard();
+		if (card.getOwner().getId().equals(userId)) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
 		Double price = sale.getPrice();
 		if (buyer.getMoney() < price) {
 			throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED);
 		}
-		Card card = sale.getCard();
 		User owner = card.getOwner();
 		card.setOwner(buyer);
 		owner.setMoney(owner.getMoney() + price);

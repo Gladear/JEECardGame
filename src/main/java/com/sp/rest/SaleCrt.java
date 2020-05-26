@@ -18,8 +18,9 @@ public class SaleCrt {
 	SaleService sService;
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/sale")
-	public void putSale(@RequestParam String cardId, @RequestParam String price) {
-		sService.create(Integer.valueOf(cardId), Double.valueOf(price));
+	public void putSale(HttpServletRequest request, @RequestParam String cardId, @RequestParam String price) {
+		Integer userId = RequestUtils.getUserID(request);
+		sService.create(userId, Integer.valueOf(cardId), Double.valueOf(price));
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/sales")
