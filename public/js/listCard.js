@@ -79,6 +79,7 @@ function sellCard(id){
 		success: function(result) {
 			console.log("Successfully put card " + id + " for sale for " + price + "$.");
 			document.getElementById("price-"+id).parentElement.parentElement.style = "background-color:#ccc;";
+			document.getElementById("price-"+id).parentElement.innerHTML = "";
 		},
 		error: function(result) {
 			console.log("Error while putting card for sale");
@@ -89,6 +90,8 @@ function sellCard(id){
 
 function addCardToList(id,imgUrlFamily,familyName,imgUrl,name,description,hp,energy,attack,defence,price, onSale){
     
+	let inputPrice = !onSale ? "<input type='number' name='price' step='0.01' value='0.00' id='price-"+id+"'>$" : " ";
+	
     content="\
     <td> \
     		<img  class='ui avatar image' src='"+imgUrl+"'> <span>"+name+" </span> \
@@ -99,7 +102,7 @@ function addCardToList(id,imgUrlFamily,familyName,imgUrl,name,description,hp,ene
     <td>"+energy+"</td> \
     <td>"+attack+"</td> \
     <td>"+defence+"</td> \
-    <td><input type='number' name='price' step='0.01' value='0.00' id='price-"+id+"'>$</td>\
+    <td>"+inputPrice+"</td>\
     <td>\
         <div class='ui vertical animated button' tabindex='0' onclick='sellCard("+id+")'>\
             <div class='hidden content'>Sell</div>\
@@ -109,9 +112,8 @@ function addCardToList(id,imgUrlFamily,familyName,imgUrl,name,description,hp,ene
     </div>\
     </td>";
     
-    let background = onSale ? 'style="background-color:#ccc"' : '';
+    let style = onSale ? 'style="background-color:#ccc;cursor:pointer;"' : 'style="cursor:pointer";';
     
-    $('#cardListId tr:last').after('<tr ' + background + '>'+content+'</tr>');
-    
+    $('#cardListId tr:last').after(`<tr id="tr-${id}" ${style} onClick="fillCurrentCard('${imgUrlFamily}','${familyName}','${imgUrl.replace(/\//g,"\/")}','${name}','${description}',${hp},${energy},${attack},${defence},${price})">${content}</tr>`);
     
 };
