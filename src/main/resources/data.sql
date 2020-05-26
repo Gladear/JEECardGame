@@ -1,4 +1,4 @@
-INSERT INTO card_template (id, name, description, family, hp, energy, attack, defense, img_url) VALUES (1, 'The Mask', 'Lorsqu', 'DC', 100, 100, 100, 100, 'https://img.filmsactu.net/datas/films/t/h/the-mask/n/the-mask-gif-5dd3c57b070c7.gif');
+INSERT INTO card_template (id, name, description, family, hp, energy, attack, defense, img_url) VALUES (1, 'The Mask', 'Splendid', 'DC', 100, 100, 100, 100, 'https://img.filmsactu.net/datas/films/t/h/the-mask/n/the-mask-gif-5dd3c57b070c7.gif');
 
 INSERT INTO user (id, name, password) VALUES (1, 'Elmut', 'password');
 INSERT INTO user (id, name, password) VALUES (2, 'Jacky', 'password');

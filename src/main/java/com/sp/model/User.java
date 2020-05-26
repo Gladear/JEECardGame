@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class User {
 	@GeneratedValue
@@ -14,7 +16,8 @@ public class User {
 	private Integer id;
 	private String name;
 	private String password;
-
+			
+	@JsonBackReference
 	@OneToMany(mappedBy = "owner")
 	private List<Card> cards;
 
