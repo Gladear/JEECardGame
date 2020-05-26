@@ -52,6 +52,9 @@ public class Sale {
 	}
 
 	public void setPrice(Double price) {
+		if (price < 0.0) {
+			throw new RuntimeException("Price can't be negative");
+		}
 		this.price = price;
 	}
 

@@ -28,6 +28,9 @@ public class SaleService {
 		if (!card.getOwner().getId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
+		if (price < 0.0) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
 		Sale sale = new Sale(0, card, price);
 		sRepository.save(sale);
 	}
