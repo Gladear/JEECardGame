@@ -1,10 +1,50 @@
 $(document ).ready(function(){
-    fillCurrentCard("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/DC_Comics_logo.png/280px-DC_Comics_logo.png","DC comics","http://www.guinnessworldrecords.com/images/superlative/superheroes/GWR-Superheroes-SUPERMAN.svg","SUPERMAN","The origin story of Superman relates that he was born Kal-El on the planet Krypton, before being rocketed to Earth as an infant by his scientist father Jor-El, moments before Krypton's destruction. Discovered and adopted by a farm couple from Kansas, the child is raised as Clark Kent and imbued with a strong moral compass. Early in his childhood, he displays various superhuman abilities, which, upon reaching maturity, he resolves to use for the benefit of humanity through a 'Superman' identity.",50,100,17,8,100);
-
-
-    for(i=0;i<5;i++){
-        addCardToList("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/DC_Comics_logo.png/280px-DC_Comics_logo.png","DC comics","http://www.guinnessworldrecords.com/images/superlative/superheroes/GWR-Superheroes-SUPERMAN.svg","SUPERMAN","The origin story of Superman relates that he was born Kal-El on the planet Krypton, before being rocketed to Earth as an infant by his scientist father Jor-El, moments before Krypton's destruction. Discovered and adopted by a farm couple from Kansas, the child is raised as Clark Kent and imbued with a strong moral compass. Early in his childhood, he displays various superhuman abilities, which, upon reaching maturity, he resolves to use for the benefit of humanity through a 'Superman' identity.",50,100,17,80,100);
-    }
+	
+	$.ajax({
+		url: "/user",
+		method: "GET",
+		success: function(result){
+			document.getElementById("username").innerHTML = result.name;
+			document.getElementById("money").innerHTML = 5000;
+			$.ajax({
+				url: "/user/cards",
+				method: "GET",
+				success: function(result){
+					console.log(result);
+				    fillCurrentCard(
+				    		result[0].imgUrlFamily,
+				    		result[0].template.family,
+				    		result[0].template.imgUrl,
+				    		result[0].template.name,
+				    		result[0].template.description,
+				    		result[0].template.hp,
+				    		result[0].template.energy,
+				    		result[0].template.attack,
+				    		result[0].template.defense,
+				    		result[0].price
+			    		);
+				    for(i=0;i<result.length;i++){
+				    	console.log(result[i].template.attack);
+				    	addCardToList(
+					    		result[i].imgUrlFamily,
+					    		result[i].template.family,
+					    		result[i].template.imgUrl,
+					    		result[i].template.name,
+					    		result[i].template.description,
+					    		result[i].template.hp,
+					    		result[i].template.energy,
+					    		result[i].template.attack,
+					    		result[i].template.defense,
+					    		result[i].price
+			    		);
+				    }
+				}
+			});
+		},
+		error: function(result){
+			window.location.replace("/formSample.html");
+		}
+	});
 
 
 });
