@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.sp.model.CardTemplate;
 import com.sp.model.User;
 import com.sp.repository.UserRepository;
 
@@ -30,14 +29,6 @@ public class UserService {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		}
 		return user.getId();
-	}
-	
-	public void buy(CardTemplate card) {
-		
-	}
-	
-	public void sell(CardTemplate card) {
-		
 	}
 	
 	public User getUser(Integer id) {

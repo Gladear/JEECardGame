@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 
 import com.sp.model.Card;
 import com.sp.model.User;
 import com.sp.service.UserService;
+import com.sp.utils.RequestUtils;
 
 @RestController
 public class UserCrt {
@@ -56,15 +57,7 @@ public class UserCrt {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/user/cards")
 	public Iterable<Card> getCard(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-
-		if (cookies.length != 1) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-		}
-
-		Cookie cookie = cookies[0];
-
-		return uService.getUser(Integer.valueOf(cookie.getValue())).getCards();
-
+		Integer userId = RequestUtils.getUserID(request);
+		return uService.getUser(userId).getCards();
 	}
 }

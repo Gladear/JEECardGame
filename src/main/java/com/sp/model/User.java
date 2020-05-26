@@ -8,15 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
 	@GeneratedValue
 	@Id
 	private Integer id;
+
 	private String name;
+
+	@JsonIgnore
 	private String password;
-			
+
+	private Integer money;
+
 	@JsonBackReference
 	@OneToMany(mappedBy = "owner")
 	private List<Card> cards;
@@ -24,7 +30,7 @@ public class User {
 	public User() {
 	}
 
-	public User(Integer id, String name, String password, List<Card> cards) {
+	public User(Integer id, String name, String password, Integer money, List<Card> cards) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -53,6 +59,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Integer getMoney() {
+		return money;
+	}
+
+	public void setMoney(Integer money) {
+		this.money = money;
 	}
 
 	public List<Card> getCards() {
