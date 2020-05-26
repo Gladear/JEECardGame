@@ -1,5 +1,6 @@
 package com.sp.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,9 +14,10 @@ public class Sale {
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "card_id")
+	@JoinColumn(name = "card_id", unique = true)
 	private Card card;
 
+	@Column(nullable = false)
 	private Double price;
 
 	public Sale() {

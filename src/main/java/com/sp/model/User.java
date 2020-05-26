@@ -2,6 +2,7 @@ package com.sp.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,12 +17,15 @@ public class User {
 	@Id
 	private Integer id;
 
+	@Column(nullable = false, unique = true)
 	private String name;
 
+	@Column(nullable = false)
 	@JsonIgnore
 	private String password;
 
-	private Integer money;
+	@Column(nullable = false)
+	private Double money;
 
 	@JsonBackReference
 	@OneToMany(mappedBy = "owner")
@@ -61,11 +65,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Integer getMoney() {
+	public Double getMoney() {
 		return money;
 	}
 
-	public void setMoney(Integer money) {
+	public void setMoney(Double money) {
 		this.money = money;
 	}
 

@@ -40,8 +40,17 @@ public class SaleService {
 	public void buy(Integer userId, Integer saleId) {
 		User buyer = uRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		Sale sale = sRepository.findById(saleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		Double price = sale.getPrice();
+		if (buyer.getMoney() < price) {
+			throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED);
+		}
 		Card card = sale.getCard();
+		User owner = card.getOwner();
 		card.setOwner(buyer);
+		owner.setMoney(owner.getMoney() + price);
+		buyer.setMoney(buyer.getMoney() - price);
+		uRepository.save(owner);
+		uRepository.save(buyer);
 		cRepository.save(card);
 		sRepository.delete(sale);
 	}
