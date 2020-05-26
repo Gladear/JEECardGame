@@ -5,41 +5,41 @@ $(document ).ready(function(){
 		method: "GET",
 		success: function(result){
 			document.getElementById("username").innerHTML = result.name;
-			document.getElementById("money").innerHTML = 5000;
+			document.getElementById("money").innerHTML = result.money;
 			$.ajax({
-				url: "/cards",
+				url: "/sales",
 				method: "GET",
 				success: function(result){
 					console.log(result);
 					
 				    fillCurrentCard(
 				    		result[0].id,
-				    		result[0].imgUrlFamily,
-				    		result[0].template.family,
-				    		result[0].template.imgUrl,
-				    		result[0].template.name,
-				    		result[0].template.description,
-				    		result[0].template.hp,
-				    		result[0].template.energy,
-				    		result[0].template.attack,
-				    		result[0].template.defense,
-				    		result[0].template.owner,
+				    		result[0].card.template.imgUrlFamily,
+				    		result[0].card.template.family,
+				    		result[0].card.template.imgUrl,
+				    		result[0].card.template.name,
+				    		result[0].card.template.description,
+				    		result[0].card.template.hp,
+				    		result[0].card.template.energy,
+				    		result[0].card.template.attack,
+				    		result[0].card.template.defense,
+				    		result[0].card.owner.name,
 				    		result[0].price
 			    		);
 				    for(i=0;i<result.length;i++){
-				    	result[i].template.owner="Jim Carrey"
+				    	
 				    	addCardToList(
 				    			result[i].id,
-					    		result[i].imgUrlFamily,
-					    		result[i].template.family,
-					    		result[i].template.imgUrl,
-					    		result[i].template.name,
-					    		result[i].template.description,
-					    		result[i].template.hp,
-					    		result[i].template.energy,
-					    		result[i].template.attack,
-					    		result[i].template.defense,
-					    		result[i].template.owner,
+					    		result[i].card.template.imgUrlFamily,
+					    		result[i].card.template.family,
+					    		result[i].card.template.imgUrl,
+					    		result[i].card.template.name,
+					    		result[i].card.template.description,
+					    		result[i].card.template.hp,
+					    		result[i].card.template.energy,
+					    		result[i].card.template.attack,
+					    		result[i].card.template.defense,
+					    		result[i].card.owner.name,
 					    		result[i].price
 			    		);
 				    }
@@ -99,11 +99,20 @@ function addCardToList(id,imgUrlFamily,familyName,imgUrl,name,description,hp,ene
     </div>\
     </td>";
     
-    $('#cardListId tr:last').after(`<tr onClick="fillCurrentCard(${id},'${imgUrlFamily}','${familyName}','${imgUrl.replace(/\//g,"\/")}','${name}','${description}',${hp},${energy},${attack},${defence},'${owner}',${price})">${content}</tr>`);
+    $('#cardListId tr:last').after(`<tr onClick="fillCurrentCard(${id},'${imgUrlFamily}','${familyName}','${(imgUrl||"").replace(/\//g,"\/")}','${name}','${description}',${hp},${energy},${attack},${defence},'${owner}',${price})">${content}</tr>`);
     
     
 };
 
 function buyCard(id){
-	console.log(id)
+	console.log("sale/buy?saleId="+id)
+	$.ajax("sale/buy?saleId="+id,{success:function(user){
+    	alert("Carte achetée!")
+    	window.location.reload()
+    },error:function(a){
+        console.log("error",a);
+        alert('carte pas achetée')
+    },
+    method:"POST"
+    })
 }

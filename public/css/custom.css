@@ -26,3 +26,6 @@ body{
 .overflowHiden{
     overflow:  auto;
 }
+tr{
+	cursor:pointer
+}

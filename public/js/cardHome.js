@@ -15,7 +15,7 @@ $(document ).ready(function(){
     $.ajax("user",{success:function(user){
     	userConnect = user.name;
         $("#userNameId").html(user.name);
-        $("#money span").html("42");
+        $("#money span").html(user.money);
 
     },error:function(a){
         console.log("error",a);
@@ -31,7 +31,7 @@ $(document ).ready(function(){
     });    
     $("#buyButtonId").click(function(){
     	if(userConnect){
-    		window.location.href="searchCard.html";    		
+    		window.location.href="marketPlace.html";    		
     	}else{
     		window.location.href="formSample.html";
     	}
