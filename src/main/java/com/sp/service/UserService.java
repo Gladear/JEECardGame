@@ -39,4 +39,9 @@ public class UserService {
 	public void sell(CardTemplate card) {
 		
 	}
+	
+	public User getUser(Integer id) {
+		Optional<User> user = uRepository.findById(id);
+		return user.orElse(null);
+	}
 }

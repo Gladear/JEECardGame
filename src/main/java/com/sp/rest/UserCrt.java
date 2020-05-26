@@ -3,6 +3,7 @@ package com.sp.rest;
 import java.io.IOException;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
 import com.sp.model.User;
@@ -35,5 +37,19 @@ public class UserCrt {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void addUser(@RequestBody User user) {
 		uService.addUser(user);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/user")
+	public User getUser(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies.length != 1) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
+
+		Cookie cookie = cookies[0];
+
+		return uService.getUser(Integer.valueOf(cookie.getValue()));
+
 	}
 }
