@@ -1,13 +1,13 @@
 $(document ).ready(function(){
 	
 	$.ajax({
-		url: "/user",
+		url: "/api/user",
 		method: "GET",
 		success: function(result){
 			document.getElementById("username").innerHTML = result.name;
 			document.getElementById("money").innerHTML = (result.money != null ? result.money : 0);
 			$.ajax({
-				url: "/user/cards",
+				url: "/api/user/cards",
 				method: "GET",
 				success: function(result){
 					console.log(result);
@@ -70,7 +70,7 @@ function fillCurrentCard(imgUrlFamily,familyName,imgUrl,name,description,hp,ener
 function sellCard(id){
 	let price = document.getElementById("price-"+id).value;
 	$.ajax({
-		url: "/sale",
+		url: "/api/sale",
 		method: "PUT",
 		data: {
 			cardId: id,

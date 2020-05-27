@@ -1,13 +1,13 @@
 $(document ).ready(function(){
 	
 	$.ajax({
-		url: "/user",
+		url: "/api/user",
 		method: "GET",
 		success: function(result){
 			document.getElementById("username").innerHTML = result.name;
 			document.getElementById("money").innerHTML = result.money;
 			$.ajax({
-				url: "/sales",
+				url: "/api/sales",
 				method: "GET",
 				success: function(result){
 					console.log(result);
@@ -106,7 +106,7 @@ function addCardToList(id,imgUrlFamily,familyName,imgUrl,name,description,hp,ene
 
 function buyCard(id){
 	console.log("sale/buy?saleId="+id)
-	$.ajax("sale/buy?saleId="+id,{success:function(user){
+	$.ajax("/api/sale/buy?saleId="+id,{success:function(user){
     	alert("Carte achetée!")
     	window.location.reload()
     },error:function(a){

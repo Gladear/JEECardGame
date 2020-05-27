@@ -12,7 +12,7 @@ $(document ).ready(function(){
 //    }
 //    xml.open("GET","user");
 //    xml.send();
-    $.ajax("user",{success:function(user){
+    $.ajax("/api/user",{success:function(user){
     	userConnect = user.name;
         $("#userNameId").html(user.name);
         $("#money span").html(user.money);

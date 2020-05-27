@@ -1,0 +1,27 @@
+version: '3'
+services:
+  monolithapp:
+    container_name : monolithapp
+    build: ./monolithic/.
+    image : card/monolithapp
+    networks : 
+      - springapp
+        #   pg_devops:
+        #     container_name: pg_devops
+        #     build: ./Bdd/. 
+        #     networks : 
+        #       - ndevops
+        #     image : fyndir/pg_devops 
+  proxy :
+    container_name : proxy
+    build : ./proxy/.
+    image : card/proxy
+    ports : 
+      - "80:80"
+    networks : 
+      - springapp
+    depends_on : 
+      - monolithapp
+         
+networks : 
+  springapp :
