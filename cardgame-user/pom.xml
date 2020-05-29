@@ -17,7 +17,10 @@
 	</parent>
 
 	<modules>
-		<module>user-webapp</module>
 		<module>user-business</module>
+		<module>user-webapp</module>
+		
 	</modules>
+	
+	
 </project>

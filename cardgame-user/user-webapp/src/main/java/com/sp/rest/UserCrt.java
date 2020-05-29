@@ -54,9 +54,10 @@ public class UserCrt {
 		}
 
 		Cookie cookie = cookies[0];
+		
+		
 
 		return uService.getUser(Integer.valueOf(cookie.getValue()));
-
 	}
 
 }

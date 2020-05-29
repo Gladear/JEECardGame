@@ -1,17 +1,5 @@
 version: '3'
 services:
-  monolithapp:
-    container_name : monolithapp
-    build: ./monolithic/.
-    image : card/monolithapp
-    networks : 
-      - springapp
-        #   pg_devops:
-        #     container_name: pg_devops
-        #     build: ./Bdd/. 
-        #     networks : 
-        #       - ndevops
-        #     image : fyndir/pg_devops 
   proxy :
     container_name : proxy
     build : ./proxy/.
@@ -20,8 +8,27 @@ services:
       - "80:80"
     networks : 
       - springapp
-    depends_on : 
-      - monolithapp
-         
+    depends_on :
+      - api-user
+      - api-card
+      - api-sale
+  api-user:
+    container_name : cardgame-user
+    build: ./cardgame-user/.
+    image : card/cardgame-user
+    networks : 
+      - springapp    
+  api-card:
+    container_name : cardgame-card
+    build: ./cardgame-card/.
+    image : card/cardgame-card
+    networks : 
+      - springapp
+  api-sale:
+    container_name : cardgame-sale
+    build: ./cardgame-sale/.
+    image : card/cardgame-sale
+    networks : 
+      - springapp   
 networks : 
   springapp :
