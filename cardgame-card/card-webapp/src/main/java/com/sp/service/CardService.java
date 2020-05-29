@@ -33,4 +33,8 @@ public class CardService {
 	public void deleteCard(Integer id) {
 		cRepository.deleteById(id);
 	}
+
+	public Iterable<Card> getAllForUser(Integer id) {		
+		return cRepository.findAllByOwnerId(id);
+	}
 }

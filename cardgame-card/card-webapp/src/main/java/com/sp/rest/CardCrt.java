@@ -19,6 +19,11 @@ public class CardCrt {
 	public Iterable<Card> getCards() {
 		return cService.getAll();
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/cards/user/{id}")
+	public Iterable<Card> getUserCards(@PathVariable String id) {
+		return cService.getAllForUser(Integer.valueOf(id));
+	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/card")
 	public void addCard(@RequestBody Card card) {
@@ -39,4 +44,6 @@ public class CardCrt {
 	public void deleteCard(@PathVariable String id) {
 		cService.deleteCard(Integer.valueOf(id));
 	}
+	
+
 }

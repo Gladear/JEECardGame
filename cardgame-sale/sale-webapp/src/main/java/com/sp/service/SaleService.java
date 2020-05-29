@@ -1,16 +1,16 @@
 package com.sp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.sp.model.Card;
 import com.sp.model.Sale;
 import com.sp.model.User;
-import com.sp.repository.CardRepository;
 import com.sp.repository.SaleRepository;
-import com.sp.repository.UserRepository;
 
 @Service
 public class SaleService {
@@ -19,8 +19,10 @@ public class SaleService {
 	SaleRepository sRepository;
 
 	public void create(Integer userId, Integer cardId, Double price) {
-		Card card = cRepository.findById(cardId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-		if (!card.getOwner().getId().equals(userId)) {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		Card card= restTemplate.getForObject("http://127.0.0.1:8081/card/"+cardId.toString(), Card.class);		 
+		if (!card.getOwnerId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 		if (price < 0.0) {
@@ -39,23 +41,26 @@ public class SaleService {
 	}
 
 	public void buy(Integer userId, Integer saleId) {
-		User buyer = uRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		User buyer = restTemplate.getForObject("http://127.0.0.1:8080/user/", User.class);
 		Sale sale = sRepository.findById(saleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-		Card card = sale.getCard();
-		if (card.getOwner().getId().equals(userId)) {
+		Card card = restTemplate.getForObject("http://127.0.0.1:8081/card/"+sale.getCardId(), Card.class); 
+		
+		if (card.getOwnerId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 		Double price = sale.getPrice();
 		if (buyer.getMoney() < price) {
 			throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED);
 		}
-		User owner = card.getOwnerId();
-		card.setOwner(buyer);
-		owner.setMoney(owner.getMoney() + price);
-		buyer.setMoney(buyer.getMoney() - price);
-		uRepository.save(owner);
-		uRepository.save(buyer);
-		cRepository.save(card);
+		Integer ownerId = card.getOwnerId();
+		card.setOwnerId(ownerId);	
+	
+		HttpEntity<Card> requestBody = new HttpEntity<>(card);
+		restTemplate.postForObject("http://127.0.0.1:8081/card/", requestBody, Card.class);
+
 		sRepository.delete(sale);
 	}
 
