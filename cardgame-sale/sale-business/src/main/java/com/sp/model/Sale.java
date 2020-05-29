@@ -4,8 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Sale {
@@ -13,9 +11,7 @@ public class Sale {
 	@Id
 	private Integer id;
 
-	@OneToOne()
-	@JoinColumn(name = "card_id", unique = true)
-	private Card card;
+	private Integer cardId;
 
 	@Column(nullable = false)
 	private Double price;
@@ -24,10 +20,10 @@ public class Sale {
 		super();
 	}
 
-	public Sale(Integer id, Card card, Double price) {
+	public Sale(Integer id, Integer cardId, Double price) {
 		super();
 		this.id = id;
-		this.card = card;
+		this.cardId = cardId;
 		this.price = price;
 	}
 
@@ -39,12 +35,12 @@ public class Sale {
 		this.id = id;
 	}
 
-	public Card getCard() {
-		return card;
+	public Integer getCard() {
+		return cardId;
 	}
 
-	public void setCard(Card card) {
-		this.card = card;
+	public void setCard(Integer cardId) {
+		this.cardId = cardId;
 	}
 
 	public Double getPrice() {

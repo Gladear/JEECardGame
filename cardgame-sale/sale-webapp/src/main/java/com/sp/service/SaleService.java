@@ -14,14 +14,9 @@ import com.sp.repository.UserRepository;
 
 @Service
 public class SaleService {
-	@Autowired
-	CardRepository cRepository;
 
 	@Autowired
 	SaleRepository sRepository;
-
-	@Autowired
-	UserRepository uRepository;
 
 	public void create(Integer userId, Integer cardId, Double price) {
 		Card card = cRepository.findById(cardId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -31,7 +26,7 @@ public class SaleService {
 		if (price < 0.0) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		}
-		Sale sale = new Sale(0, card, price);
+		Sale sale = new Sale(0, card.getId(), price);
 		sRepository.save(sale);
 	}
 
@@ -54,7 +49,7 @@ public class SaleService {
 		if (buyer.getMoney() < price) {
 			throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED);
 		}
-		User owner = card.getOwner();
+		User owner = card.getOwnerId();
 		card.setOwner(buyer);
 		owner.setMoney(owner.getMoney() + price);
 		buyer.setMoney(buyer.getMoney() - price);

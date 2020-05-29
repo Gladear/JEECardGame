@@ -58,6 +58,11 @@
 			<artifactId>user-business</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>cardgame-common</groupId>
+			<artifactId>cardgame-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
