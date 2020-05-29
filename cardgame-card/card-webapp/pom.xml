@@ -45,17 +45,7 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<dependency>
-			<groupId>fr.cpe.gr8.cardgame.card</groupId>
-			<artifactId>sale-business</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>fr.cpe.gr8.cardgame.card</groupId>
-			<artifactId>user-business</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+	
 		
 	</dependencies>
 

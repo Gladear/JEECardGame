@@ -17,6 +17,7 @@
 	</properties>
 
 	<dependencies>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -37,16 +38,15 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>fr.cpe.gr8.cardgame.card</groupId>
-			<artifactId>card-business</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		
+	
+		
 	</dependencies>
 
 	<build>

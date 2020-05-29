@@ -1,4 +1,4 @@
-package com.sp.respository;
+package com.sp.repository;
 
 import java.util.Optional;
 
@@ -9,3 +9,4 @@ import com.sp.model.User;
 public interface UserRepository extends CrudRepository<User, Integer> {
 	public Optional<User> findByName(String name);
 }
+

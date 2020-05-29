@@ -35,4 +35,9 @@ public class UserService {
 		Optional<User> user = uRepository.findById(id);
 		return user.orElse(null);
 	}
+
+	public Iterable<User> getAll() {
+		// TODO Auto-generated method stub
+		return uRepository.findAll();
+	}
 }

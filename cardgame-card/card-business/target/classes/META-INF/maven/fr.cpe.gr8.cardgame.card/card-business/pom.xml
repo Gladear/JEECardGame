@@ -3,15 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
-		<groupId>fr.cpe.gr8.cardgame.user</groupId>
-		<artifactId>cardgame-user</artifactId>
+		<groupId>fr.cpe.gr8.cardgame.card</groupId>
+		<artifactId>cardgame-card</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
-	<artifactId>user-business</artifactId>
-	
+
+	<artifactId>card-business</artifactId>
+
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -43,7 +43,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	
+		<dependency>
+			<groupId>fr.cpe.gr8.cardgame.user</groupId>
+			<artifactId>user-business</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -54,4 +58,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 </project>

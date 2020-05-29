@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.sp.model.Card;
 import com.sp.model.User;
 import com.sp.service.UserService;
-import com.sp.utils.RequestUtils;
 
 @RestController
 public class UserCrt {
@@ -41,11 +39,17 @@ public class UserCrt {
 		uService.addUser(user);
 	}
 
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/users")
+	public Iterable<User> getUsers() {
+		return uService.getAll();
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/user")
 	public User getUser(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 
-		if (cookies.length != 1) {
+		if (cookies == null || cookies.length != 1 ) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		}
 
@@ -55,9 +59,4 @@ public class UserCrt {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/user/cards")
-	public Iterable<Card> getCard(HttpServletRequest request) {
-		Integer userId = RequestUtils.getUserID(request);
-		return uService.getUser(userId).getCards();
-	}
 }

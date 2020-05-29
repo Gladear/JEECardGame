@@ -1,15 +1,11 @@
 package com.sp.model;
 
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -28,18 +24,15 @@ public class User {
 	@Column(nullable = false)
 	private Double money;
 
-	@JsonBackReference
-	@OneToMany(mappedBy = "owner")
-	private List<Card> cards;
 
 	public User() {
 	}
 
-	public User(Integer id, String name, String password, Integer money, List<Card> cards) {
+	public User(Integer id, String name, String password, Integer money) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
-		this.cards = cards;
+		
 	}
 
 	public Integer getId() {
@@ -74,12 +67,5 @@ public class User {
 		this.money = money;
 	}
 
-	public List<Card> getCards() {
-		return cards;
-	}
-
-	public void setCards(List<Card> cards) {
-		this.cards = cards;
-	}
 
 }
