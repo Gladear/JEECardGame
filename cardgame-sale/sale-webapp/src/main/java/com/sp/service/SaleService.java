@@ -21,7 +21,7 @@ public class SaleService {
 	public void create(Integer userId, Integer cardId, Double price) {
 		
 		RestTemplate restTemplate = new RestTemplate();
-		Card card= restTemplate.getForObject("http://127.0.0.1:8081/card/"+cardId.toString(), Card.class);		 
+		Card card= restTemplate.getForObject("http://api-card:8081/"+cardId.toString(), Card.class);		 
 		if (!card.getOwnerId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
@@ -44,9 +44,9 @@ public class SaleService {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
-		User buyer = restTemplate.getForObject("http://127.0.0.1:8080/user/", User.class);
+		User buyer = restTemplate.getForObject("http://api-user:8080/"+userId, User.class);
 		Sale sale = sRepository.findById(saleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-		Card card = restTemplate.getForObject("http://127.0.0.1:8081/card/"+sale.getCardId(), Card.class); 
+		Card card = restTemplate.getForObject("http://api-card:8081/"+sale.getCardId(), Card.class); 
 		
 		if (card.getOwnerId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -59,7 +59,7 @@ public class SaleService {
 		card.setOwnerId(ownerId);	
 	
 		HttpEntity<Card> requestBody = new HttpEntity<>(card);
-		restTemplate.postForObject("http://127.0.0.1:8081/card/", requestBody, Card.class);
+		restTemplate.postForObject("http://api-card:8081/", requestBody, Card.class);
 
 		sRepository.delete(sale);
 	}

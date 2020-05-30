@@ -13,7 +13,7 @@ public final class RequestUtils {
 	public static Integer getUserID(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 
-		if (cookies.length != 1) {
+		if (cookies == null || cookies.length !=1) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		}
 

@@ -1,7 +1,7 @@
 $(document ).ready(function(){
 	
 	$.ajax({
-		url: "/api/user",
+		url: "/api/user/current",
 		method: "GET",
 		success: function(result){
 			document.getElementById("username").innerHTML = result.name;

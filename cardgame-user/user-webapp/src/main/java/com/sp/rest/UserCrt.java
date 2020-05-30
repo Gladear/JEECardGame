@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +39,12 @@ public class UserCrt {
 		return uService.getAll();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/")
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	public User getUser(@PathVariable String id) {
+		return uService.getUser(Integer.valueOf(id));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/current")
 	public User getUser(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 
@@ -49,6 +55,8 @@ public class UserCrt {
 		Cookie cookie = cookies[0];
 		return uService.getUser(Integer.valueOf(cookie.getValue()));
 	}
+	
+	
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/")
 	@ResponseStatus(HttpStatus.CREATED)
