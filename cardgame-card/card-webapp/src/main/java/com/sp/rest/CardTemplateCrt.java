@@ -15,7 +15,7 @@ public class CardTemplateCrt {
 	@Autowired
 	CardTemplateService cService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/templates")
+	@RequestMapping(method = RequestMethod.GET, value = "/template")
 	public Iterable<CardTemplate> getCards() {
 		return cService.getAll();
 	}

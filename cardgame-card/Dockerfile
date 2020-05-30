@@ -5,5 +5,5 @@ ENV MYAPP_HOME /opt/myapp
 WORKDIR $MYAPP_HOME
 # On recupere les .jar générer dans l'environnement precedent
 COPY card-webapp/target/*.jar ./myapp.jar
-EXPOSE 8082
+EXPOSE 8081
 ENTRYPOINT java -jar myapp.jar

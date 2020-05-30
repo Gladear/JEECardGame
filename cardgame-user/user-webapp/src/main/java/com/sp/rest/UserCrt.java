@@ -33,19 +33,12 @@ public class UserCrt {
 		response.sendRedirect("/cardHome.html");
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/user")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void addUser(@RequestBody User user) {
-		uService.addUser(user);
-	}
-
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/users")
+	@RequestMapping(method = RequestMethod.GET, value = "/")
 	public Iterable<User> getUsers() {
 		return uService.getAll();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/user")
+	@RequestMapping(method = RequestMethod.GET, value = "/")
 	public User getUser(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
 
@@ -54,10 +47,13 @@ public class UserCrt {
 		}
 
 		Cookie cookie = cookies[0];
-		
-		
-
 		return uService.getUser(Integer.valueOf(cookie.getValue()));
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void addUser(@RequestBody User user) {
+		uService.addUser(user);
 	}
 
 }

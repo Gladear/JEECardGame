@@ -15,32 +15,32 @@ public class CardCrt {
 	@Autowired
 	CardService cService;
 
-	@RequestMapping(method = RequestMethod.GET, value = "/cards")
+	@RequestMapping(method = RequestMethod.GET, value = "/")
 	public Iterable<Card> getCards() {
 		return cService.getAll();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/cards/user/{id}")
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	public Card getCard(@PathVariable String id) {
+		return cService.getCard(Integer.valueOf(id));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/user/{id}")
 	public Iterable<Card> getUserCards(@PathVariable String id) {
 		return cService.getAllForUser(Integer.valueOf(id));
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/card")
+	@RequestMapping(method = RequestMethod.PUT, value = "/")
 	public void addCard(@RequestBody Card card) {
 		cService.updateCard(card);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/card/{id}")
-	public Card getCard(@PathVariable String id) {
-		return cService.getCard(Integer.valueOf(id));
-	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "/card")
+	@RequestMapping(method = RequestMethod.POST, value = "/")
 	public void updateCard(@RequestBody Card card) {
 		cService.updateCard(card);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, value = "/card/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public void deleteCard(@PathVariable String id) {
 		cService.deleteCard(Integer.valueOf(id));
 	}

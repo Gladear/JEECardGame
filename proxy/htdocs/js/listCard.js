@@ -7,7 +7,7 @@ $(document ).ready(function(){
 			document.getElementById("username").innerHTML = result.name;
 			document.getElementById("money").innerHTML = (result.money != null ? result.money : 0);
 			$.ajax({
-				url: "/api/user/cards",
+				url: "/api/card/user/" + result.id,
 				method: "GET",
 				success: function(result){
 					console.log(result);
