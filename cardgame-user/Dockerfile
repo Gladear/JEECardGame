@@ -4,6 +4,6 @@ FROM openjdk:11-jre
 ENV MYAPP_HOME /opt/myapp
 WORKDIR $MYAPP_HOME
 # On recupere les .jar générer dans l'environnement precedent
-COPY user-webapp/target/*.jar /myapp.jar
+COPY user-webapp/target/*.jar ./myapp.jar
 EXPOSE 8080
 ENTRYPOINT java -jar myapp.jar
