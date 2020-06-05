@@ -15,6 +15,13 @@ public class UserService {
 	@Autowired
 	UserRepository uRepository;
 	
+	public void updateUser(User user) {
+		// C pas bo
+		User orig = uRepository.findById(user.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		user.setPassword(orig.getPassword());
+		uRepository.save(user);
+	}
+	
 	public void addUser(User user) {
 		uRepository.save(user);
 	}

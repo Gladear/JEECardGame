@@ -21,7 +21,7 @@ public class SaleService {
 	public void create(Integer userId, Integer cardId, Double price) {
 		
 		RestTemplate restTemplate = new RestTemplate();
-		Card card= restTemplate.getForObject("http://api-card:8081/"+cardId.toString(), Card.class);		 
+		Card card= restTemplate.getForObject("http://localhost:8081/"+cardId.toString(), Card.class);		 
 		if (!card.getOwnerId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
@@ -40,27 +40,28 @@ public class SaleService {
 		return sRepository.findById(saleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	public void buy(Integer userId, Integer saleId) {
+	public void buy(Integer buyerId, Integer saleId) {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
-		User buyer = restTemplate.getForObject("http://api-user:8080/"+userId, User.class);
+		User buyer = restTemplate.getForObject("http://localhost:8080/"+buyerId, User.class);
 		Sale sale = sRepository.findById(saleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-		Card card = restTemplate.getForObject("http://api-card:8081/"+sale.getCardId(), Card.class); 
-		
-		if (card.getOwnerId().equals(userId)) {
+		Card card = restTemplate.getForObject("http://localhost:8081/"+sale.getCardId(), Card.class); 
+		User owner = restTemplate.getForObject("http://localhost:8080/"+card.getOwnerId(), User.class);
+		if (card.getOwnerId().equals(buyerId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 		Double price = sale.getPrice();
 		if (buyer.getMoney() < price) {
 			throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED);
 		}
-		Integer ownerId = card.getOwnerId();
-		card.setOwnerId(ownerId);	
-	
-		HttpEntity<Card> requestBody = new HttpEntity<>(card);
-		restTemplate.postForObject("http://api-card:8081/", requestBody, Card.class);
+		buyer.setMoney(buyer.getMoney() - price);
+		owner.setMoney(owner.getMoney() + price);
+		card.setOwnerId(buyerId);
 
+		restTemplate.postForObject("http://localhost:8081/", new HttpEntity<>(card), Card.class);
+		restTemplate.postForObject("http://localhost:8080/", new HttpEntity<>(buyer), User.class);
+		restTemplate.postForObject("http://localhost:8080/", new HttpEntity<>(owner), User.class);
 		sRepository.delete(sale);
 	}
 

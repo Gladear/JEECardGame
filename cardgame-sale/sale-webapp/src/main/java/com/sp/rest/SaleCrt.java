@@ -29,7 +29,7 @@ public class SaleCrt {
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/",headers="Content-Type=application/x-www-form-urlencoded")
+	@RequestMapping(method = RequestMethod.PUT, value = "/")
 	public void putSale(HttpServletRequest request, @RequestParam String cardId, @RequestParam String price) {
 		Integer userId = RequestUtils.getUserID(request);
 		sService.create(userId, Integer.valueOf(cardId), Double.valueOf(price));

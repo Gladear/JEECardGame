@@ -22,7 +22,7 @@
 		<div class="column"></div>
 		<div class="column"></div>
 		<div class="column">
-			<form class="ui form" action="/api/user/login" method="POST">
+			<form class="ui form" id="login"> 
 				<h3 class="ui dividing header">Connect</h3>
 				<div class="field">
 					<label>User name</label> <input type="text" name="username">
@@ -34,5 +34,24 @@
 			</form>
 		</div>
 	</div>
+        <script src="./lib/jquery-3.3.1.min.js"></script>
+        <script src="./lib/Semantic-UI-CSS-master/semantic.js"></script>
+	<script async>
+		const loginEl = document.forms.login;
+		loginEl.addEventListener('submit', (event) => {
+			event.preventDefault()
+			$.ajax('/api/user/login', {
+				method: 'POST',
+				data: {
+					username: loginEl.username.value,
+					password: loginEl.password.value,
+				},
+				success: (data) => {
+					localStorage.setItem('userId', data);
+					location.href = '/cardHome.html'
+				}
+			})
+		});
+	</script>
 </body>
 </html>
