@@ -1,0 +1,1 @@
+INSERT INTO Sale (id, card_id, price) VALUES (1, 1, 100);

@@ -26,10 +26,11 @@ public class User {
 	public User() {
 	}
 
-	public User(Integer id, String name, String password, Integer money) {
+	public User(Integer id, String name, String password, Double money) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
+		this.money = money;
 
 	}
 

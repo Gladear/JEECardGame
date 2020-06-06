@@ -7,16 +7,16 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class UserTest {
 
 	@Test
 	public void createUser() {
-		User user = new User(1, "User", "password", 100);
+		double money = 100;
+		User user = new User(1, "User", "password", money);
 		assertTrue(user.getId() == 1);
-		assertTrue(user.getName() == "User");
-		assertTrue(user.getPassword() == "password");
-		assertTrue(user.getMoney() == 100);
+		assertTrue(user.getName().equals("User"));
+		assertTrue(user.getPassword().equals("password"));
+		assertTrue(user.getMoney() == money);
 	}
 }
