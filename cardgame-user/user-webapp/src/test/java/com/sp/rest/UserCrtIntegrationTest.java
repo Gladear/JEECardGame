@@ -32,8 +32,8 @@ public class UserCrtIntegrationTest {
 
 	@Test
 	public void givenUsers_thenReturnJsonArray() throws Exception {
-		User elmut = new User(1, "Elmut", "password", 0);
-		User jacky = new User(1, "Jacky", "password", 100);
+		User elmut = new User(1, "Elmut", "password", 0.0);
+		User jacky = new User(1, "Jacky", "password", 100.0);
 
 		List<User> allUsers = Lists.list(elmut, jacky);
 
@@ -49,7 +49,7 @@ public class UserCrtIntegrationTest {
 	@Test
 	public void givenUser_thenReturnJsonObject() throws Exception {
 		Integer userId = 1;
-		User elmut = new User(userId, "Elmut", "password", 0);
+		User elmut = new User(userId, "Elmut", "password", 0.0);
 
 		given(service.getUser(userId)).willReturn(elmut);
 		
