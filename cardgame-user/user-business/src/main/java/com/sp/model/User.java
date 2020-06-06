@@ -1,6 +1,5 @@
 package com.sp.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +23,6 @@ public class User {
 	@Column(nullable = false)
 	private Double money;
 
-
 	public User() {
 	}
 
@@ -32,7 +30,7 @@ public class User {
 		this.id = id;
 		this.name = name;
 		this.password = password;
-		
+
 	}
 
 	public Integer getId() {
@@ -66,6 +64,5 @@ public class User {
 	public void setMoney(Double money) {
 		this.money = money;
 	}
-
 
 }

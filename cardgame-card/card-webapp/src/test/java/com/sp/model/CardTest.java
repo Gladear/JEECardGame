@@ -1,8 +1,7 @@
 package com.sp.model;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +20,11 @@ public class CardTest {
 	
 	@Test
 	public void createCard() {
-		User user = new User(1, "User", "password", 100, new ArrayList<Card>());
-		CardTemplate cardTemplate = new CardTemplate(1, "Card", "Very short description", "Family", 100, 100, 100, 100, "url");
-		Sale sale = new Sale(1, , 5);
-		List <Card> cardList = cardRepository.findById(1);
-		assertTrue(cardList.size() == 1);
-		assertTrue(cardList.get(0).getId().equals(1));
+//		TODO Not enough tests
+//		User user = new User(1, "User", "password", 100);
+//		CardTemplate cardTemplate = new CardTemplate(1, "Card", "Very short description", "Family", 100, 100, 100, 100, "url");
+		Optional<Card> optCard = cardRepository.findById(1);
+		assertTrue(optCard.isPresent());
+		assertTrue(optCard.get().getId().equals(1));
 	}
 }
