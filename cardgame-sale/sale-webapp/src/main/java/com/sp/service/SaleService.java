@@ -1,10 +1,8 @@
 package com.sp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.sp.model.Card;
@@ -18,10 +16,14 @@ public class SaleService {
 	@Autowired
 	SaleRepository sRepository;
 
+	@Autowired
+	UserRemoteService uService;
+
+	@Autowired
+	CardRemoteService cService;
+
 	public void create(Integer userId, Integer cardId, Double price) {
-		
-		RestTemplate restTemplate = new RestTemplate();
-		Card card= restTemplate.getForObject("http://localhost:8081/"+cardId.toString(), Card.class);		 
+		Card card = cService.findById(cardId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		if (!card.getOwnerId().equals(userId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
@@ -41,13 +43,12 @@ public class SaleService {
 	}
 
 	public void buy(Integer buyerId, Integer saleId) {
-		
-		RestTemplate restTemplate = new RestTemplate();
-		
-		User buyer = restTemplate.getForObject("http://localhost:8080/"+buyerId, User.class);
+		User buyer = uService.findById(buyerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		Sale sale = sRepository.findById(saleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-		Card card = restTemplate.getForObject("http://localhost:8081/"+sale.getCardId(), Card.class); 
-		User owner = restTemplate.getForObject("http://localhost:8080/"+card.getOwnerId(), User.class);
+		Card card = cService.findById(sale.getCardId())
+				.orElseThrow(() -> new RuntimeException("Cannot find card associated to sale"));
+		User owner = uService.findById(card.getOwnerId())
+				.orElseThrow(() -> new RuntimeException("Cannot find owner associated to sale"));
 		if (card.getOwnerId().equals(buyerId)) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
@@ -55,13 +56,12 @@ public class SaleService {
 		if (buyer.getMoney() < price) {
 			throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED);
 		}
+		card.setOwnerId(buyerId);
 		buyer.setMoney(buyer.getMoney() - price);
 		owner.setMoney(owner.getMoney() + price);
-		card.setOwnerId(buyerId);
-
-		restTemplate.postForObject("http://localhost:8081/", new HttpEntity<>(card), Card.class);
-		restTemplate.postForObject("http://localhost:8080/", new HttpEntity<>(buyer), User.class);
-		restTemplate.postForObject("http://localhost:8080/", new HttpEntity<>(owner), User.class);
+		cService.update(card);
+		uService.update(buyer);
+		uService.update(owner);
 		sRepository.delete(sale);
 	}
 

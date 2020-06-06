@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>fr.cpe.gr8.cardgame.user</groupId>
-		<artifactId>cardgame-user</artifactId>
+		<groupId>cardgame-sale</groupId>
+		<artifactId>cardgame-sale</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>user-webapp</artifactId>
+	<artifactId>sale-services</artifactId>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -49,13 +49,6 @@
 		<dependency>
 			<groupId>fr.cpe.gr8.cardgame.user</groupId>
 			<artifactId>user-business</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>cardgame-common</groupId>
-			<artifactId>cardgame-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

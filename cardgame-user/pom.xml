@@ -19,7 +19,7 @@
 	<modules>
 		<module>user-business</module>
 		<module>user-webapp</module>
-		
+		<module>user-services</module>
 	</modules>
 	
 	

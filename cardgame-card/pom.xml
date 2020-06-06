@@ -19,6 +19,7 @@
 	<modules>
 		<module>card-webapp</module>
 		<module>card-business</module>
+		<module>card-services</module>
 	</modules>
 		
 	

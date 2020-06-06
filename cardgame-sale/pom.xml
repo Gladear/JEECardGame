@@ -19,5 +19,6 @@
 	<modules>
 		<module>sale-webapp</module>
 		<module>sale-business</module>
+		<module>sale-services</module>
 	</modules>
 </project>

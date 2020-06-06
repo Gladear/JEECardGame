@@ -63,6 +63,16 @@
 			<artifactId>cardgame-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>fr.cpe.gr8.cardgame.user</groupId>
+			<artifactId>user-services</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.cpe.gr8.cardgame.card</groupId>
+			<artifactId>card-services</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

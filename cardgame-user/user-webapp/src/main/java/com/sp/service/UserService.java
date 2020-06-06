@@ -44,7 +44,6 @@ public class UserService {
 	}
 
 	public Iterable<User> getAll() {
-		// TODO Auto-generated method stub
 		return uRepository.findAll();
 	}
 }
